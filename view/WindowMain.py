@@ -15,8 +15,14 @@ class Window_Main(object):
 		self.Cargar_pdf=None
 
 		#fin widget pestaña agregar
+
+		#widget Pestaña consultar
+		self.Txt_Buscar=None
+
+		#fin widget pestaña consultar
 		self.Ventana_Principal=Tk()
 		self.Ventana_Principal.geometry('1200x630')
+		self.Ventana_Principal.iconbitmap('../icons/libros.ico')
 		self.Ventana_Principal.title('Gestion de Documentos')
 		#ejecucion de funciones
 		self.add_tabs()
@@ -28,33 +34,44 @@ class Window_Main(object):
 		self.Frame_Agregar=ttk.Frame(self.P_Contenedor,width=1190,height=580)
 		self.add_Frame_Agregar()
 		self.Frame_Consultar=ttk.Frame(self.P_Contenedor,width=1190,height=580)
+		self.add_Frame_Consultar()
 		
 		#agregando como pestañas
 		self.P_Contenedor.add(self.Frame_Agregar,text='Agregar')
 		self.P_Contenedor.add(self.Frame_Consultar,text='Consultar')
 		self.P_Contenedor.pack(fill='both',expand=True)
 	def add_Frame_Agregar(self):
+		font_s=('Verdana',20,'italic')
 		etiqueta=ttk.Label(self.Frame_Agregar,text="Cabecera:")
-		etiqueta.grid(column=2,row=5)
+		etiqueta['font']=font_s
+		etiqueta.place(x=100,y=10)
 		#agregando textbox
-		self.Txt_Cabecera=ttk.Entry(self.Frame_Agregar)
-		self.Txt_Cabecera.grid(column=4,row=5)
+		self.Txt_Cabecera=ttk.Entry(self.Frame_Agregar,width=52)
+		self.Txt_Cabecera.place(x=300,y=20)
 		#descripcion
-		etiqueta2=ttk.Label(self.Frame_Agregar,text="Descripcion:")
-		etiqueta2.grid(column=2,row=10)
+		etiqueta2=ttk.Label(self.Frame_Agregar,text="Descripcion:",font=font_s)
+		etiqueta2.place(x=100,y=50)
 
 		self.Txt_Descripcion=Text(self.Frame_Agregar,width=40,height=5)
-		self.Txt_Descripcion.grid(column=4,row=10)
+		self.Txt_Descripcion.place(x=300,y=50)
 
 		#cargar pdf
-		etiqueta3=ttk.Label(self.Frame_Agregar,text="Cargar PDF:")
-		etiqueta3.grid(column=2,row=20)
-		btn_open=ttk.Button(self.Frame_Agregar,text='Examinar...',command=self.Open_Pdf)
-		btn_open.grid(column=4,row=20)
+		etiqueta3=ttk.Label(self.Frame_Agregar,text="Cargar PDF:",font=font_s)
+		etiqueta3.place(x=100,y=180)
+		btn_open=ttk.Button(self.Frame_Agregar,text='Examinar...',command=self.Open_Pdf,width=50)
+		btn_open.place(x=300,y=180)
+
+	def add_Frame_Consultar(self):
+		font_s=('Verdana',20,'italic')
+		etiquetaC=ttk.Label(self.Frame_Consultar,text='Buscar',font=font_s)
+		etiquetaC.place(x=100,y=10)
+
+		self.Txt_Buscar=ttk.Entry(self.Frame_Consultar)
+		self.Txt_Buscar.place(x=250,y=20)
 
 
 	def Open_Pdf(self):
-		self.Cargar_pdf=filedialog.askopenfilename(title="seleccione un archivo")
+		self.Cargar_pdf=filedialog.askopenfilename(title="seleccione un archivo",filetypes=(("archivos pdf","*.pdf"),))
 
 	def ejecutar(self):
 		self.Ventana_Principal.mainloop()
