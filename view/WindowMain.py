@@ -9,6 +9,8 @@ class Window_Main(object):
 		self.P_Contenedor=None
 
 		#fin variable Pestaña
+		#menues...
+		self.Menu_Editar=None
 		#widget Pestaña agregar
 		self.Txt_Cabecera=None
 		self.Txt_Descripcion=None
@@ -25,6 +27,7 @@ class Window_Main(object):
 		self.Ventana_Principal.iconbitmap('../icons/libros.ico')
 		self.Ventana_Principal.title('Gestion de Documentos')
 		#ejecucion de funciones
+		self.add_Menues()
 		self.add_tabs()
 		self.ejecutar()
 	def add_tabs(self):
@@ -40,6 +43,20 @@ class Window_Main(object):
 		self.P_Contenedor.add(self.Frame_Agregar,text='Agregar')
 		self.P_Contenedor.add(self.Frame_Consultar,text='Consultar')
 		self.P_Contenedor.pack(fill='both',expand=True)
+	def add_Menues(self):
+		#menu 1
+		self.Menu_Editar=Menu(self.Ventana_Principal)
+		self.Ventana_Principal.config(menu=self.Menu_Editar)
+		#opciones menu1
+		option1=Menu(self.Menu_Editar)
+		option1.add_command(label="Datos Personales",command=self.Top_Persona)
+		#opcion usuario
+		option1.add_command(label="Crear Usuario")
+		#tipo de documento
+		option1.add_command(label="Nueva Categoria Documento")
+
+		self.Menu_Editar.add_cascade(label="Editar",menu=option1)
+
 	def add_Frame_Agregar(self):
 		font_s=('Verdana',20,'italic')
 		etiqueta=ttk.Label(self.Frame_Agregar,text="Cabecera:")
@@ -72,6 +89,11 @@ class Window_Main(object):
 
 	def Open_Pdf(self):
 		self.Cargar_pdf=filedialog.askopenfilename(title="seleccione un archivo",filetypes=(("archivos pdf","*.pdf"),))
+
+	def Top_Persona(self):
+		ventana_persona=Toplevel(bg='orange')
+		ventana_persona.focus_set()
+		self.Ventana_Principal.iconify()
 
 	def ejecutar(self):
 		self.Ventana_Principal.mainloop()
